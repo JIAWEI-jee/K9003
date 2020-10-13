@@ -45,7 +45,7 @@ static void key_handle ( void )
 	}
 	if ( ( key_val == KEY_1_PRES ) && ( calibration_std == 0 ) )
 	{
-		KEY_printf ( " key_scan\r\n" );
+		//KEY_printf ( " key_scan\r\n" );
 
 		if ( get_device_state() == ON )
 		{
@@ -217,6 +217,7 @@ u16 temp_calc ( u16 uR510,u16 uRw )
 	}
 //  gm_printf ( "R = %f  \r\n",u1 );
 	u1 = u1 / Length;
+	
 	if ( u1 < 73 )
 	{
 		return 0;
