@@ -5,7 +5,7 @@
 #include "adc.h"
 
 u8 calibration_std = 0;
-u8 ac_std = 0,HEAT_STD = 0, AC_TEST_STD = 1;
+u8 ac_std = 0,HEAT_STD = 0,, AC_TEST_STD = 1;
 u16 AC_POWER_CNT = second_heat_power;
 u16 ADC_val_AC[20] = {0};
 
@@ -17,7 +17,7 @@ void key_init ( void )
 	P2M5 = 0x61;                        //P25设置为非施密特数字带上拉输入
 	P2M6 = 0x61;                        //P26设置为非施密特数字带上拉输入
 	P0M2 = 0x61;                        //P02设置为非施密特数字带上拉输入
-	P2M0 = 0XC1;					             	//设置为推挽输出
+	P2M0 = 0XC1;						//设置为推挽输出
 	P0M0 = 0XC1;                        //设置为推挽输出
 }
 

@@ -14,9 +14,8 @@
 #define SKU 9003
 #define SOFT_VER "1.00.00"
 
-u16 adc_cnt = 0,ac_value = 0;
+u16 adc_cnt = 0;
 u8  first_heat_std = 0,fault_std = 0;
-
 
 void Set_Temp ( u16 temp );
 void Controll_Heat ( u16 temp_set,u16 temp_now );
@@ -90,7 +89,7 @@ static void key_handle ( void )
 			led_set_on();
 		}
 
-		if ( key_val == KEY_2_PRES )
+		if ( key_val == KEY_2_PRES ) 
 		{
 			led_set_on();
 //			KEY_printf ( " KEY_2_PRES\r\n" );
@@ -166,14 +165,14 @@ u16 calibration_temperature ( u16 temper )
 			if ( temper_val > temp1 )
 			{
 				flash_info.correct_value = temper_val - temp1;
-				flash_info.correct_sign = 1;
+				flash_info.correct_sign = 1; 
 			}
 			else
 			{
 				flash_info.correct_value = temp1 - temper_val;
 
 				hal_uart_putchar ( flash_info.correct_value );
-				flash_info.correct_sign = 2;
+				flash_info.correct_sign = 2; 
 			}
 			if ( ( flash_info.correct_value < 2 ) || ( flash_info.correct_value > 20 ) )
 			{
@@ -218,7 +217,7 @@ u16 temp_calc ( u16 uR510,u16 uRw )
 	}
 //  gm_printf ( "R = %f  \r\n",u1 );
 	u1 = u1 / Length;
-
+	
 	if ( u1 < 73 )
 	{
 		return 0;
@@ -263,40 +262,13 @@ u16 temp_calc ( u16 uR510,u16 uRw )
 	return ( basi_tmp );
 }
 
-void AC_calc_V ( u16 *AC_value )
-{  
-   float u1 = 0,u3 = 0;
-	 u8 i = 0 ;
-	Sort ( ADC_val_AC, 20 );
-//	gm_printf ( "AC:\r\n" );
-//	for ( i=0; i<20; i++ )
-//	{
-//		gm_printf ( " %d",ADC_val_AC[i] );
-//	}
-//	gm_printf ( "\r\n" );
 
-    
-	u1 = ADC_val_AC[19];
-//		gm_printf ( "u1 = %f \r\n",u1 );
-	u1 = u1/4096 * 5;
-//		gm_printf ( "v1 = %f \r\n",u1 );
-	u3 = u1/5.1*200;
-//		gm_printf ( "u3 = %f \r\n",u3 );
-//	u3 = u1 + u3 ;
-	//	gm_printf ( "AC_sin = %f \r\n",u3 );
-	u3 = u3/1.414;
-		gm_printf ( "AC = %f \r\n",u3 );
-	*AC_value = ( u16 ) u3;	
-	   // gm_printf ( "AC_value = %d \r\n",AC_value );
-
-}
 
 void temperature_handle ( void )
 {
 	u16 temp = 0;
 	u16 adc_val1 = 0,adc_val3 = 0;
 	static u8 error_std = 0;
-	u8 i = 0 ;
 	adc_cnt++;
 
 	if ( adc_cnt > 10000 )
@@ -306,15 +278,10 @@ void temperature_handle ( void )
 
 		//	KEY_printf ( "adv1 = %d adv3 =%d \r\n",adc_val1,adc_val3 );  //pjw set
 		temp = temp_calc ( adc_val1, adc_val3 );
-        //	KEY_printf ( "temp val:%d \r\n",temp );
+//			KEY_printf ( "temp val:%d \r\n",temp );
 		temp =	calibration_temperature ( temp );
-        //	KEY_printf ( "%d \r\n",temp );
-       if (AC_TEST_STD == 1)
-       	{
-       	AC_TEST_STD = 0;
-         AC_calc_V (&ac_value); 
-		 gm_printf ( "AC = %d \r\n",ac_value );
-       	}
+//			KEY_printf ( "%d \r\n",temp );
+
 		if ( adc_val1 >50 )
 		{
 			if ( get_device_state() == ON )
@@ -397,6 +364,7 @@ void main ( void )
 	lcd_display_gap ( GAP_8 );
 	led_set_off();
 	wdt_init ( 2 );
+//	set_pwm ( 0 );
 	HEAT_STD = 0;
 
 	gm_printf ( "\r\n==================================\r\n" );
@@ -405,14 +373,14 @@ void main ( void )
 	gm_printf ( "gap %d \r\n", ( u16 ) flash_info.gap );      //挡位
 	gm_printf ( "timer %d \r\n", ( u16 ) flash_info.timer );  // 时间长度
 	gm_printf ( "==================================\r\n" );
-  
+
 	while ( 1 )
 	{
 		key_handle();
 		temperature_handle();
 		AC_TEST();
 		PWM_out();
-
+		// Protect();
 		clear_wdt();
 
 	}
@@ -438,12 +406,12 @@ void Set_Temp ( u16 temp )
 {
 	if ( one_heat == 1 )
 	{
-
+		
 		Controll_Heat ( One_Heat_Temp,temp );
 	}
 	else
 	{
-
+		
 		switch ( flash_info.gap )
 		{
 			case GAP_WARM:

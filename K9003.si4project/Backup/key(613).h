@@ -3,17 +3,15 @@
 #include "HC89F303.h"
 
 
-extern u8 calibration_std,AC_TEST_STD;
+extern u8 calibration_std;
 extern u8 ac_std,HEAT_STD;
 extern u16 AC_POWER_CNT;
-extern u16 ADC_val_AC[20];
-
 #define AC_cnt  31
 #define KEY_1 	P2_5
 #define KEY_2 	P2_6
 #define KEY_3 	P3_5
 #define AC_CY   P0_2
-#define ac_out  P2_0
+#define ac_out  P2_7
 #define POWER_IO P0_0
 #define KEY_1_PRES 	1	//KEY1按下
 #define KEY_2_PRES	2	//KEY2按下

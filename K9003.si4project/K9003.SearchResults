@@ -1,0 +1,9 @@
+---- ac_std Matches (8 in 2 files) ----
+key.c (HAEDWARE\Key) line 6 : u8 ac_std = 0,HEAT_STD = 0;
+AC_TEST in key.c (HAEDWARE\Key) : 	if ( ( AC_CY == 0 ) && ( ac_std == 0 ) )
+AC_TEST in key.c (HAEDWARE\Key) : 		ac_std = 1;
+AC_TEST in key.c (HAEDWARE\Key) : 	else if ( ( ac_std == 1 ) && ( AC_CY == 1 ) )
+AC_TEST in key.c (HAEDWARE\Key) : 		ac_std = 2;
+PWM_out in key.c (HAEDWARE\Key) : 		if ( ac_std == 2 )
+PWM_out in key.c (HAEDWARE\Key) : 				ac_std = 0;
+key.h (HAEDWARE\Key) line 7 : extern u8 ac_std,HEAT_STD;

@@ -2,12 +2,9 @@
 #include "delay.h"
 #include "flash.h"
 #include "timer.h"
-#include "adc.h"
-
 u8 calibration_std = 0;
-u8 ac_std = 0,HEAT_STD = 0, AC_TEST_STD = 1;
-u16 AC_POWER_CNT = second_heat_power;
-u16 ADC_val_AC[20] = {0};
+u8 ac_std = 0,HEAT_STD = 0;
+u16 AC_POWER_CNT = second_heat_power; 
 
 #define KEY_PRESS_TIME 700
 
@@ -17,9 +14,10 @@ void key_init ( void )
 	P2M5 = 0x61;                        //P25设置为非施密特数字带上拉输入
 	P2M6 = 0x61;                        //P26设置为非施密特数字带上拉输入
 	P0M2 = 0x61;                        //P02设置为非施密特数字带上拉输入
-	P2M0 = 0XC1;					             	//设置为推挽输出
+	P2M7 = 0XC1;                        //设置为推挽输出
 	P0M0 = 0XC1;                        //设置为推挽输出
 }
+
 
 void AC_TEST ( void )
 {
@@ -34,11 +32,9 @@ void AC_TEST ( void )
 	}
 
 }
-
 void PWM_out()
 {
 	static u16 cnt = 0;
-	u8 i = 0;
 	if ( HEAT_STD == 1 )
 	{
 		if ( ac_std == 2 )
@@ -47,7 +43,7 @@ void PWM_out()
 			{
 				cnt = 0;
 				POWER_IO = 1;
-				delay_ms ( 6 ); //3 ~ 8
+				delay_ms ( 6 ); //3 ~ 8 
 				POWER_IO = 0;
 				ac_std = 0;
 			}
@@ -57,25 +53,6 @@ void PWM_out()
 	else
 	{
 		POWER_IO = 0;
-		if ( AC_TEST_STD == 1 )
-		{
-			if ( ac_std == 2 )
-			{
-				if ( ++cnt > 20 )
-				{
-					cnt = 0;
-					for ( i = 0; i< 20; i++ )
-					{
-						ac_out = 1;
-						ADC_val_AC[i] =  AC_power_adc_test ();
-						ac_out = 0;
-					}
-
-					ac_std = 0;
-				}
-
-			}
-		}
 	}
 }
 

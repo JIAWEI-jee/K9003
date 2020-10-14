@@ -67,7 +67,15 @@ u16 get_adc_val_ch_P27 ( void )
 
 u16 AC_power_adc_test ( void )
 {
-	return get_adc_val_ch_P27();
+	u32 temp = 0;
+	u8 i = 0;
+
+	for ( i=0; i<5; i++ )
+	{
+		temp+=get_adc_val_ch_P27();
+	}
+	temp/=5;
+	return temp;
 }
 
 void get_voltage ( u16* u1_voltage,u16* u3_voltage )

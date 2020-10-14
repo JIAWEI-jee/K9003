@@ -67,7 +67,14 @@ u16 get_adc_val_ch_P27 ( void )
 
 u16 AC_power_adc_test ( void )
 {
-	return get_adc_val_ch_P27();
+	u32 temp = 0;
+	u8 i = 0;
+	u8  i = 0;
+	for ( i=0; i<5; i++ )
+	{
+		temp+=get_adc_val_ch_P27();
+	}
+	temp/=5;
 }
 
 void get_voltage ( u16* u1_voltage,u16* u3_voltage )
@@ -88,22 +95,6 @@ void get_voltage ( u16* u1_voltage,u16* u3_voltage )
 	temp/=5;
 	*u3_voltage = temp*5000/4096;
 }
-
-
-void Sort ( u16* arr, int n )
-{
-	int m, i, j;
-	for ( i = 0; i < n - 1; i++ )
-		for ( j = 0; j < n - 1 - i; j++ )
-			if ( arr[j] > arr[j + 1] )
-			{
-				m = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = m;
-			}
-}
-
-
 
 //u16 get_voltage_u1(void)
 //{

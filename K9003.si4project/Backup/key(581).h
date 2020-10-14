@@ -3,7 +3,7 @@
 #include "HC89F303.h"
 
 
-extern u8 calibration_std,AC_TEST_STD;
+extern u8 calibration_std;
 extern u8 ac_std,HEAT_STD;
 extern u16 AC_POWER_CNT;
 extern u16 ADC_val_AC[20];
